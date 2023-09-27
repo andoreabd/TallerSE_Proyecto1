@@ -42,3 +42,26 @@ SSTATE_MIRRORS ?= "file://.* https://sstate.yoctoproject.org/all/PATH;downloadfi
 ```
 bitbake core-image-minimal
 ```
+## Model
+### Downloader
+Desargar el github de los modelos de Open Vino
+```
+git clone https://github.com/openvinotoolkit/open_model_zoo.git
+```
+Descargar
+```
+pip install openvino-dev
+```
+```
+cd open_model_zoo/tools/model_tools
+pip install --upgrade pip
+pip install .
+```
+Pytorch: 
+```
+python3 -mpip install --user -r ./requirements-pytorch.in 
+```
+TensorFlow: 
+```
+python3 -mpip install --user -r ./requirements-tensorflow.in 
+```
