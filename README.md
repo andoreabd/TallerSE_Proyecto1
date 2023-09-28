@@ -71,8 +71,8 @@ python3 -mpip install --user -r ./requirements-tensorflow.in
 ###  
 ```
 cd ../../demos/human_pose_estimation_demo/python/
-omz_downloader --all
-omz_converter --all 
+omz_downloader --list models.lst
+omz_converter --list models.lst
 ```
 
 ### Forma 1: Video pre-generado
@@ -94,4 +94,72 @@ python3 human_pose_estimation_demo.py \
   -at ae
 ```
 #### Link de referencia
+Decarga de omz tools:
+[https://docs.openvino.ai/2023.1/omz_tools_downloader.html] 
+Busqueda de los demos:
+[https://docs.openvino.ai/2023.1/omz_demos.html#doxid-omz-demos]
+Informacion del demo escogido:
 [https://docs.openvino.ai/2023.1/omz_demos_human_pose_estimation_demo_python.html#doxid-omz-demos-human-pose-estimation-demo-python]
+
+## Generar la imagen personalizada
+### Agregar layers a la imagen
+Se tienen que clonar varios repositorios dentro del de Poky 
+```
+git clone -b kirkstone https://github.com/openembedded/meta-openembedded.git
+git clone -b kirkstone https://git.yoctoproject.org/meta-intel
+git clone -b kirkstone https://github.com/kraj/meta-clang.git
+```
+Levantar ambiente  
+```
+source oe-init-build-env 
+```
+Se deben generar los layes de la imagen con los comandos 
+```
+bitbake-layers add-layer ../meta-openembedded/meta-oe
+bitbake-layers add-layer ../meta-openembedded/meta-python
+bitbake-layers add-layer ../meta-openembedded/meta-networking
+bitbake-layers add-layer ../meta-openembedded/meta-gnome
+bitbake-layers add-layer ../meta-openembedded/meta-multimedia
+bitbake-layers add-layer ../meta-openembedded/meta-xfce
+bitbake-layers add-layer ../meta-clang
+bitbake-layers add-layer ../meta-intel
+```
+Sin embargo presenté problemas al generarlo así entonces los añadí dirigiendome a la carpeta **build/conf/bblayers.conf** ya añadiendo manualmente la información necesaria
+```
+POKY_BBLAYERS_CONF_VERSION = "2"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  /home/andreabo/poky/meta \
+  /home/andreabo/poky/meta-poky \
+  /home/andreabo/poky/meta-yocto-bsp \
+  /home/andreabo/poky/meta-openembedded/meta-oe \
+  /home/andreabo/poky/meta-openembedded/meta-python \
+  /home/andreabo/poky/meta-openembedded/meta-networking \
+  /home/andreabo/poky/meta-openembedded/meta-gnome \
+  /home/andreabo/poky/meta-openembedded/meta-multimedia \
+  /home/andreabo/poky/meta-openembedded/meta-xfce \
+  /home/andreabo/poky/meta-clang \
+  /home/andreabo/poky/meta-intel \
+  "
+```
+#### Link de referencia
+[https://docs.openvino.ai/2023.1/openvino_docs_install_guides_installing_openvino_yocto.html]
+### Agregar recetas a la imagen
+Para añadir las recetas hay que abrir el file en **build/conf/local.conf** y añadir las instalaciones que se van a necesitar en la imagen personalizada
+```
+IMAGE_INSTALL:append = " \
+                 python3-pip \
+                 git \
+                 vim \
+                 openssh \
+                 opencv \
+                 packagegroup-core-x11 \
+                 packagegroup-xfce-base \
+                " 
+```
+
+
+
