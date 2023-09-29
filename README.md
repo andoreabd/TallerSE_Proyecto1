@@ -50,11 +50,11 @@ bitbake core-image-minimal
 ```
 git clone https://github.com/openvinotoolkit/open_model_zoo.git
 ```
-2. Descargar 
+2. Descargar las funciones primordiales para el buen funcionamiento
 ```
 pip install openvino-dev
 ```
-3. Descargar
+3. Descargar los paquetes de omz
 ```
 cd open_model_zoo/tools/model_tools
 pip install --upgrade pip
@@ -68,7 +68,8 @@ python3 -mpip install --user -r ./requirements-pytorch.in
 ```
 python3 -mpip install --user -r ./requirements-tensorflow.in 
 ```
-###  
+###  Descarga y conversión de los modelos necesarios
+En este caso se va a ingresar a la carpeta donde está el modelo que se va a usar y se va a descargar y convertir con el **models.lst** para que no dure mucho tiempo ni se descarguen documentos que no se van a necesitar
 ```
 cd ../../demos/human_pose_estimation_demo/python/
 omz_downloader --list models.lst
@@ -124,7 +125,7 @@ bitbake-layers add-layer ../meta-openembedded/meta-xfce
 bitbake-layers add-layer ../meta-clang
 bitbake-layers add-layer ../meta-intel
 ```
-Sin embargo presenté problemas al generarlo así entonces los añadí dirigiendome a la carpeta **build/conf/bblayers.conf** ya añadiendo manualmente la información necesaria
+Sin embargo presenté problemas al generarlo así, entonces los añadí dirigiendome a la carpeta **build/conf/bblayers.conf** ya añadiendo manualmente la información necesaria
 ```
 POKY_BBLAYERS_CONF_VERSION = "2"
 
@@ -160,9 +161,13 @@ IMAGE_INSTALL:append = " \
                  packagegroup-xfce-base \
                 " 
 ```
-Tambien para poder correr la imagen en Virtual Box se le tiene que agregar al mismo archivo
+Para poder correr la imagen en Virtual Box se le tiene que agregar al mismo archivo
 ```
 IMAGE_FSTYPES += "wic.vmdk"
+```
+Y tambien, para tener espacio en el Virtual Box para poder bajar los videos y scripts necesarios se le debe a;adir al mismo archivo
+```
+IMAGE_ROOTFS_SIZE="2048000"
 ```
 ### Correr la imagen mínima con los cambios hechos
 ```
@@ -178,6 +183,56 @@ bitbake -c cleansstate libice-native
 Y así pude generar bien la imagen mínima sin problemas.
 
 ## Probar la imagen en Virtual Box
+### Instalacion de Virtual Box
+Cuando ya la imagen esta generada, se va a descargar Virtual Box con
+```
+sudo apt update
+sudo apt install virtualbox
+```
+### Probar la imagen en el Virtual Box
+Ingresar a Virtual Box y darle en New para generar una nueva máquina virtual con las siguientes especificaciones
+Name: Proyecto1
+Machine Folder: /home/andreabo/VirtualBox VMs
+Type: Linux
+Version: Other Linux (64-bit) 
+
+Memory size: 4096MB
+Hard Disk: Use an existing virtual hard disk file
+**/poky/build/tmp/deploy/images/qemux86-64**
+core-image-minimal-qemux86-64-20230929031742.rootfs.wic.vmdk
+
+### Actualizar los settings de la Virtual Box para que tenga internet
+1. Ir a settings
+2. Ir a network y en Attached to seleccionar Bridged Adapter y en Advanced y Promiscous Mode seleccionar Allow All
+3. Iniciar la VM
+4. En una terminal escribir
+```
+ifconfig eth0 up
+udhcpc -i eth0 
+```
+### Clonar el repositorio con el modelo a utilizar
+```
+git clone https://github.com/andoreabd/TallerSE_Proyecto1.git 
+```
+### Instalar el toolkit de OpenVino de PyPi
+Set up en ambiente de Open Vino y activarlo
+```
+python3 -m venv openvino_env
+source openvino_env/bin/activate
+```
+Set up y actualizar el PIP a la version más alta
+```
+python -m pip install --upgrade pip
+```
+Instalar los paquetes
+```
+python -m pip install openvino
+```
+
+
+
+
+
 
 
 
