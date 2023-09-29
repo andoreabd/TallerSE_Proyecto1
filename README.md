@@ -81,7 +81,7 @@ Se carga el demo de human pose estimation. Se usa "-d" para indicar el dispositi
 ```
 python3 human_pose_estimation_demo.py \
   -d CPU \
-  -i  /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/face-demographics-walking.mp4\
+  -i  /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/face-demographics-walking.mp4 \
   -m /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
   -at ae
 ```
@@ -165,9 +165,20 @@ Para poder correr la imagen en Virtual Box se le tiene que agregar al mismo arch
 ```
 IMAGE_FSTYPES += "wic.vmdk"
 ```
-Y tambien, para tener espacio en el Virtual Box para poder bajar los videos y scripts necesarios se le debe a;adir al mismo archivo
+Y también, para tener espacio en el Virtual Box para poder bajar los videos y scripts necesarios se le debe añadir al mismo archivo
 ```
 IMAGE_ROOTFS_SIZE="2048000"
+```
+Y:
+```
+# Enable clDNN GPU plugin when needed.
+# This requires meta-clang and meta-oe layers to be included in bblayers.conf
+# and is not enabled by default.
+PACKAGECONFIG:append:pn-openvino-inference-engine = " opencl"
+
+# Enable building OpenVINO Python API.
+# This requires meta-python layer to be included in bblayers.conf.
+PACKAGECONFIG:append:pn-openvino-inference-engine = " python3"
 ```
 ### Correr la imagen mínima con los cambios hechos
 ```
