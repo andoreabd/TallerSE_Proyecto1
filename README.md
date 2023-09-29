@@ -160,10 +160,13 @@ IMAGE_INSTALL:append = " \
                  packagegroup-xfce-base \
                 " 
 ```
+Tambien para poder correr la imagen en Virtual Box se le tiene que agregar al mismo archivo
+```
+IMAGE_FSTYPES += "wic.vmdk"
+```
 ### Correr la imagen mínima con los cambios hechos
 ```
 bitbake core-image-minimal
-
 ```
 Falló el build system de Yocto Project ya que no podía encontrar ciertos archivos especificados con URL en el error.
 La solución fue correr
@@ -173,6 +176,7 @@ bitbake -c cleansstate dnf-native
 bitbake -c cleansstate libice-native
 ```
 Y así pude generar bien la imagen mínima sin problemas.
+
 ## Probar la imagen en Virtual Box
 
 
