@@ -23,7 +23,7 @@ cd poky
 ```
 2. Ingresar al branch de Kirkstone, con el que se va a generar la imagen mínima
 ```
-git checkout -t origin/mickledore -b my-mickledore
+git checkout -t origin/kirkstone -b my-kirkstone
 git pull
 ```
 ### Creación de la imagen mínima con Yocto Project
