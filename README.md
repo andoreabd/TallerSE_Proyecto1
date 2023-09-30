@@ -81,8 +81,8 @@ Se carga el demo de human pose estimation. Se usa "-d" para indicar el dispositi
 ```
 python3 human_pose_estimation_demo.py \
   -d CPU \
-  -i  /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/face-demographics-walking.mp4 \
-  -m /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
+  -i  /home/andoreabd/open_model_zoo/demos/human_pose_estimation_demo/python/face-demographics-walking.mp4 \
+  -m /home/andoreabd/open_model_zoo/demos/human_pose_estimation_demo/python/intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
   -at ae
 ```
 ### Forma 2: Video de una cámara de video
@@ -91,7 +91,7 @@ En este caso, todas las entradas son las mismas que en el pasado pero el "-i" va
 python3 human_pose_estimation_demo.py \
   -d CPU \
   -i  /dev/video0\
-  -m /home/andreabo/open_model_zoo/demos/human_pose_estimation_demo/python/intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
+  -m /home/andoreabd/open_model_zoo/demos/human_pose_estimation_demo/python/intel/human-pose-estimation-0005/FP16/human-pose-estimation-0005.xml \
   -at ae
 ```
 #### Link de referencia
