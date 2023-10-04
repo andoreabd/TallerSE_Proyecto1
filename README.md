@@ -239,7 +239,10 @@ Instalar los paquetes
 ```
 python -m pip install openvino
 ```
+## Crear Layer Meta-Mylayer
+### Crear
 
+pipoe --package scipy --python python3 --default-license CLOSED
 
 
 
