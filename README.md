@@ -240,9 +240,46 @@ Instalar los paquetes
 python -m pip install openvino
 ```
 ## Crear Layer Meta-Mylayer
-### Crear
-
+### Crear layer
+En **poky/build** (por el source) para generar el layer
+```
+bitbake-layers create-layer ../meta-mylayer
+```
+Ingresar a la dieccion de **poky/meta-layer** y:
+```
+mkdir recipes-scipy
+mkdir recipes-scipy/scipy
+```
+### Creacion de recetas 
+En **poky/meta-layer/recipes-scipy.scipy** instalar pipoe
+```
+pip install pipoe
+pipoe -h
+```
+Correr pipoe para tener los paquetes de scipy
+```
+pipoe --package scipy
+```
+Hubo un error con la creacion de las recetas entonces se uso
+```
 pipoe --package scipy --python python3 --default-license CLOSED
+```
+### Annadir al bblayer
+Y hay que annadir la receta al **bblayer.conf** en **poky/build** (por el source)
+```
+bitbake-layers add-layer ../meta-mylayer
+```
+### Annadir al local.conf
+Ingresar a **poky/build/conf/local.conf** y annadir en **IMAGE_INSTALL_append**
+```
+python3-numpy
+python3-scipy
+```
+
+
+
+
+
 
 
 
